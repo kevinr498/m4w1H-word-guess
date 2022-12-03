@@ -1,8 +1,55 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
-import { expect, test } from "vitest";
+import { expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
 
-test("renders correctly", () => {
+// Tests ✅ assume hard-coded word "bird"
+
+it("displays 4 dashes", () => {
   render(<App />);
-  expect(screen.getByText("Hello world!")).toBeInTheDocument();
+  expect(screen.getByText(/____/)).toBeInTheDocument();
+});
+
+it("reveals the letter when guessed", async () => {
+  const user = userEvent.setup();
+  render(<App />);
+
+  const input = screen.getByLabelText(/guess a letter/i);
+
+  await user.type(input, "b");
+
+  expect(screen.getByText(/b___/)).toBeInTheDocument();
+});
+
+it("reveals the letter when guessed (case-insensitive)", async () => {
+  const user = userEvent.setup();
+  render(<App />);
+
+  const input = screen.getByLabelText(/guess a letter/i);
+
+  await user.type(input, "B");
+
+  expect(screen.getByText(/b___/i)).toBeInTheDocument();
+});
+
+it("reveals the letter when guessed (multiple times)", async () => {
+  const user = userEvent.setup();
+  render(<App />);
+
+  const input = screen.getByLabelText(/guess a letter/i);
+
+  await user.type(input, "b");
+  await user.type(input, "i");
+
+  expect(screen.getByText(/bi/i)).toBeInTheDocument();
+});
+
+it("clears the input after each guess", async () => {
+  const user = userEvent.setup();
+  render(<App />);
+
+  const input = screen.getByLabelText(/guess a letter/i);
+  await user.type(input, "b");
+
+  expect(input).toHaveValue("");
 });
