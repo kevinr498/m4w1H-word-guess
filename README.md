@@ -16,5 +16,3 @@ Here is what [the app](https://kodeden-m4w1h-word.netlify.app/) is supposed to d
 You must use **components** and `useState` to make it happen.
 
 There are **tests** in `src/App.test.jsx`, but they don't really do anything. You must fill those out to and make sure that they pass.
-
-Do not use `solution` **branch** unless absolutely necessary.
