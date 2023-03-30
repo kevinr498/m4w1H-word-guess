@@ -1,4 +1,4 @@
-# M4W1H - Word Guess
+# cook_that app
 
 Install the **dependencies** with `npm i`.
 
