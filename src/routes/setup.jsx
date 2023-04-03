@@ -23,5 +23,5 @@ export default function Setup({ handleSubmit }) {
 }
 
 Setup.propTypes = {
-  handleSubmit: PropTypes,
+  handleSubmit: PropTypes.func,
 };

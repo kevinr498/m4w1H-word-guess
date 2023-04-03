@@ -22,8 +22,8 @@ export default function Timer({ count, onTimeUp }) {
   const seconds = countDown % 60;
 
   return (
-    <div>
-      <h1>Countdown Timer</h1>
+    <div className="flex">
+      <h1 className="mr-2">Timer:</h1>
       <p>
         {minutes.toString().padStart(2, "0")}:
         {seconds.toString().padStart(2, "0")}
@@ -33,6 +33,6 @@ export default function Timer({ count, onTimeUp }) {
 }
 
 Timer.propTypes = {
-  count: PropTypes,
+  count: PropTypes.number,
   onTimeUp: PropTypes.func,
 };
