@@ -1,14 +1,24 @@
 import PropTypes from "prop-types";
 import React from "react";
 import GameOver from "../components/game-over";
+import Timer from "./timer";
 
-const getGameStatus = ({ displayedWord, badGuesses, maxBadGuesses }) => {
+const getGameStatus = ({
+  displayedWord,
+  badGuesses,
+  maxBadGuesses,
+  timeLeft,
+}) => {
   if (!displayedWord.includes("_")) {
     return " Won";
   }
 
   if (badGuesses >= maxBadGuesses) {
     return "You've run out of attempts";
+  }
+
+  if (timeLeft === 0) {
+    return "You've run out of time!";
   }
 
   return "Game On!";
@@ -34,6 +44,11 @@ const replaceUnderscoresWithCorrectGuess = ({
 // TODO: Add timer ⏱️
 export default function Game({ gameSettings }) {
   const { word, maxGuesses, maxTime } = gameSettings;
+  const [timeLeft, setMaxTime] = React.useState(maxTime);
+
+  function handleTimeUp() {
+    setMaxTime(0);
+  }
 
   const [wordDisplay, setWordDisplay] = React.useState(
     word.replace(/[a-z]/gi, "_")
@@ -72,6 +87,7 @@ export default function Game({ gameSettings }) {
     displayedWord: wordDisplay,
     badGuesses: rongGuesses,
     maxBadGuesses: maxGuesses,
+    timeLeft,
   });
 
   return gameStatus === "Game On!" ? (
@@ -82,6 +98,7 @@ export default function Game({ gameSettings }) {
       ref={mainRef}
     >
       <h1 className="text-4xl font-black">Guess the Word</h1>
+      <Timer count={maxTime} onTimeUp={handleTimeUp}></Timer>
 
       <p className="text-4xl font-extrabold uppercase tracking-widest">
         {wordDisplay}
